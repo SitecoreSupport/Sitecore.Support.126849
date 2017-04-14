@@ -1,5 +1,5 @@
 # Sitecore.Support.126849
-Fixes ID duplicates in RadioListField WFFM field entries in MVC presentation.
+Fixes ID duplicates in RadioListField and CheckboxList field WFFM field entries in MVC presentation. Also fixes some slightly incorrect markup in CheckboxField.
 
 ## License  
 This patch is licensed under the [Sitecore Corporation A/S License for GitHub](https://github.com/sitecoresupport/Sitecore.Support.126849/blob/master/LICENSE).  
