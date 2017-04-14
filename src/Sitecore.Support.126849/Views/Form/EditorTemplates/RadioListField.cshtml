@@ -30,68 +30,79 @@
                                     break;
                                 }
                                 <td>
-                                    <label>
-                                        @{
-                                            var htmlIdForVal = @Html.IdFor(x => Model.Value);
-                                            var cId = htmlIdForVal.ToString().Replace("Fields_" + Model.Items.Count + "__Value", "Fields_" + index + "__Value");
 
-                                            var htmlNameForVal = @Html.NameFor(x => Model.Value).ToString().Replace("Fields[" + Model.Items.Count + "]", "Fields[" + index + "]");
-                                        }
-                                        <input id="@cId" name="@htmlNameForVal" type="radio" value="@Model.Items[index].Text">                                   
+                                    @{
+                                        var cId = Html.IdFor(x => Model.Value).ToString() + index;
+                                    }
+                                    @if (Model.Items[index].Selected)
+                                    {
+                                        @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { Checked = "checked", id = cId })
+                                    }
+                                    else
+                                    {
+                                        @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { id = cId })
+                                    }
+                                   
+                                    <label for="@cId">
                                         @Model.Items[index].Text
                                     </label>
                                 </td>
-                                index++;
-                            }
+                                            index++;
+                                        }
                         }
                     </tr>
-                }
+                                        }
             </table>
         </div>
-    }
-    else
-    {
-        <div class="@css radio">
-            <table class="@css">
-                @for (int row = 0; row < rows; row++)
-                {
-                    index = row;
-                    <tr>
-                        @for (int column = 1; column <= columns; column++)
+                                        }
+                                        else
+                                        {
+                                            <div class="@css radio">
+                                                <table class="@css">
+                                                    @for (int row = 0; row < rows; row++)
+                                                    {
+                                                        index = row;
+                                                        <tr>
+                                                            @for (int column = 1; column <= columns; column++)
                         {
                             if (index >= Model.Items.Count)
                             {
                                 break;
                             }
                             <td>
-                                <label>
-                                    @{
-                                        var htmlIdForVal = @Html.IdFor(x => Model.Value);
-                                        var cId = htmlIdForVal.ToString().Replace("Fields_"+ Model.Items.Count + "__Value", "Fields_" + index + "__Value");
-
-                                        var htmlNameForVal = @Html.NameFor(x => Model.Value).ToString().Replace("Fields["+ Model.Items.Count + "]", "Fields[" + index + "]");
-                                    }                                
-                                    <input id="@cId" name="@htmlNameForVal" type="radio" value="@Model.Items[index].Text">
+                                @{
+                                    var cId = Html.IdFor(x => Model.Value).ToString() + index;
+                                }
+                                
+                                @if (Model.Items[index].Selected)
+                                {
+                                    @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { Checked = "checked", id = cId })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { id = cId })
+                                }
+                                <label for="@cId">
                                     @Model.Items[index].Text
                                 </label>
                             </td>
 
-                            if (colMod > 0 && column > colMod)
-                            {
-                                index += rows - 1;
-                            }
-                            else
-                            {
-                                if (row == rows - 1 && column >= colMod && colMod > 0)
-                                {
-                                    break;
-                                }
-                                index += rows;
-                            }
-                        }
-                    </tr>
-                }
-            </table>
-        </div>
-    }
-}
+                                        if (colMod > 0 && column > colMod)
+                                        {
+                                            index += rows - 1;
+                                        }
+                                        else
+                                        {
+                                            if (row == rows - 1 && column >= colMod && colMod > 0)
+                                            {
+                                                break;
+                                            }
+                                            index += rows;
+                                        }
+                                    }
+                                                        </tr>
+                                    }
+                                                </table>
+                                            </div>
+                                        }
+                                    }
