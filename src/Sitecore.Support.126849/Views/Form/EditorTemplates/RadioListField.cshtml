@@ -2,8 +2,9 @@
 @using Sitecore.Forms.Mvc.ViewModels.Fields
 @model RadioListField
 
-@using (Html.BeginField())
-{
+@*@using (Html.BeginField())*@
+@Html.Raw(Html.OpenFormField(Model, true).ToString().Replace("<label", "<fieldset><legend><lebel").Replace("</label>", "</label></legend>"))
+@{
     string direction = Model.Direction;
     int columns = Model.Columns;
     if (columns == 0)
@@ -30,79 +31,75 @@
                                     break;
                                 }
                                 <td>
-
-                                    @{
-                                        var cId = Html.IdFor(x => Model.Value).ToString() + index;
-                                    }
-                                    @if (Model.Items[index].Selected)
+                                    @using (Html.BeginTag("label"))
                                     {
-                                        @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { Checked = "checked", id = cId })
-                                    }
-                                    else
-                                    {
-                                        @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { id = cId })
-                                    }
-                                   
-                                    <label for="@cId">
-                                        @Model.Items[index].Text
-                                    </label>
-                                </td>
-                                            index++;
-                                        }
-                        }
-                    </tr>
-                                        }
-            </table>
-        </div>
+                                        var cid = Html.IdFor(x => Model.Value).ToString() + index;
+                                        if (Model.Items[index].Selected)
+                                        {
+                                        @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { Checked = "checked", id = cid })
                                         }
                                         else
                                         {
-                                            <div class="@css radio">
-                                                <table class="@css">
-                                                    @for (int row = 0; row < rows; row++)
-                                                    {
-                                                        index = row;
-                                                        <tr>
-                                                            @for (int column = 1; column <= columns; column++)
+                                        @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { id = cid })
+                                        }
+                                        @Model.Items[index].Text
+                                    }
+                                </td>
+                                index++;
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="@css radio">
+            <table class="@css">
+                @for (int row = 0; row < rows; row++)
+                {
+                    index = row;
+                    <tr>
+                        @for (int column = 1; column <= columns; column++)
                         {
                             if (index >= Model.Items.Count)
                             {
                                 break;
                             }
                             <td>
-                                @{
-                                    var cId = Html.IdFor(x => Model.Value).ToString() + index;
-                                }
-                                
-                                @if (Model.Items[index].Selected)
+                                @using (Html.BeginTag("label"))
                                 {
-                                    @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { Checked = "checked", id = cId })
-                                }
-                                else
-                                {
-                                    @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { id = cId })
-                                }
-                                <label for="@cId">
+                                    var cid = Html.IdFor(x => Model.Value).ToString() + index;
+                                    if (Model.Items[index].Selected)
+                                    {
+                                    @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { Checked = "checked", id = cid })
+                                    }
+                                    else
+                                    {
+                                    @Html.RadioButtonFor(x => Model.Value, Model.Items[index].Value, new { id = cid })
+                                    }
                                     @Model.Items[index].Text
-                                </label>
+                                }
                             </td>
 
-                                        if (colMod > 0 && column > colMod)
-                                        {
-                                            index += rows - 1;
-                                        }
-                                        else
-                                        {
-                                            if (row == rows - 1 && column >= colMod && colMod > 0)
-                                            {
-                                                break;
-                                            }
-                                            index += rows;
-                                        }
-                                    }
-                                                        </tr>
-                                    }
-                                                </table>
-                                            </div>
-                                        }
-                                    }
+                            if (colMod > 0 && column > colMod)
+                            {
+                                index += rows - 1;
+                            }
+                            else
+                            {
+                                if (row == rows - 1 && column >= colMod && colMod > 0)
+                                {
+                                    break;
+                                }
+                                index += rows;
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+}
+</fieldset>
